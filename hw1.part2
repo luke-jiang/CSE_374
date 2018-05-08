@@ -1,0 +1,29 @@
+1.
+wc prints newline, word, and byte count for each file passed as parameter. It also prints a count for total
+line if more than one file is passed as parameter. -l option prints the newline counts
+2.
+  259   318 12677 /etc/passwd
+3.
+To exit from the current process, we can use ctrl+d or ctrl+c. To kill any process running in background,
+we can use command 'ps' to find the process id and then use kill command with the argument being the process number
+4.
+command 'echo $HOME' prints the path of the home directory, so $HOME stores current user's
+home directory
+5.
+PWD: stores the current working directory
+PATH: stores a list of directories to be searched when you enter a program.
+6.
+locate   // use find instead 
+7.
+command 'which' is used for searching an executable under directories listed in the
+environment variable $PATH and print out the executable's full path, while 'locate'
+is used for searching files by names in one or more databases prepared by 'updatedb' by
+matching file names against one or more patterns. It then outputs the path of matching
+files one per line.
+8.
+'echo Hello World' has default stdout (the screen), while 'echo Hello World > something' redirects
+stdout to file 'something' so that the output of this command is stored in that file
+9.
+The new content (more text) overwrites the previous content in file 'something'.
+10.
+The new content (more text) appends to the end of the file 'something'.
