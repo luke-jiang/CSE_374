@@ -1,0 +1,66 @@
+Script started on Sat Mar 31 15:40:26 2018
+]0;yuxuaj@klaatu:~[?1034h[yuxuaj@klaatu ~]$ # Getting started
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ echo "Hello world"
+Hello world
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ passwd
+Changing password for user yuxuaj.
+Changing password for yuxuaj.
+(current) UNIX password:
+New password:
+Retype new password:
+passwd: all authentication tokens updated successfully.
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ date
+Sat Mar 31 15:41:37 PDT 2018
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ #
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ # File paths and directory navigation
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ echo ~
+/homes/yuxuaj
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ cd ~
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ ls
+hw0.script  hw1.part1  [0m[38;5;27mnew_dir[0m  test.txt
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ mkdir temp
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ mv temp files
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ cd files
+]0;yuxuaj@klaatu:~/files[yuxuaj@klaatu files]$ date > now
+]0;yuxuaj@klaatu:~/files[yuxuaj@klaatu files]$ cp now before
+]0;yuxuaj@klaatu:~/files[yuxuaj@klaatu files]$ ls -l
+total 8
+-rw-rw-r-- 1 yuxuaj yuxuaj 29 Mar 31 15:42 before
+-rw-rw-r-- 1 yuxuaj yuxuaj 29 Mar 31 15:42 now
+]0;yuxuaj@klaatu:~/files[yuxuaj@klaatu files]$ echo "" > temp
+]0;yuxuaj@klaatu:~/files[yuxuaj@klaatu files]$ mv temp test
+]0;yuxuaj@klaatu:~/files[yuxuaj@klaatu files]$ cd ..
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ rm -r files
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ #
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ # Permissions
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ echo "It's a secret"! > secretfile
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ chmod a-w secretfile
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ ls -l secretfile
+-r--r--r-- 1 yuxuaj yuxuaj 15 Mar 31 15:43 secretfile
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ cat <<< "some content" >> secretfile
+bash: secretfile: Permission denied
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ chmod a-r secretfile
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ ls -l secretfile
+---------- 1 yuxuaj yuxuaj 15 Mar 31 15:43 secretfile
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ cat secretfile
+cat: secretfile: Permission denied
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ #
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ # Display versions of Linux kernel
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ uname -a
+Linux klaatu.cs.washington.edu 4.9.84-1.el7.retpoline.x86_64 #1 SMP Sun Feb 25 15:56:57 PST 2018 x86_64 x86_64 x86_64 GNU/Linux
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ ps -u yuxuaj
+  PID TTY          TIME CMD
+  443 ?        00:00:00 sshd
+  450 pts/4    00:00:00 bash
+18530 pts/4    00:00:00 script
+18533 pts/4    00:00:00 script
+18534 pts/14   00:00:00 bash
+28698 pts/14   00:00:00 ps
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ #
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ # Searching
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ grep yuxuaj /etc/passwd
+[01;31m[Kyuxuaj[m[K:x:26973:26973::/homes/[01;31m[Kyuxuaj[m[K:/bin/bash
+]0;yuxuaj@klaatu:~[yuxuaj@klaatu ~]$ exit
+exit
+
+Script done on Sat Mar 31 15:45:50 2018

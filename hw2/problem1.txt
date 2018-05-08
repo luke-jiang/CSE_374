@@ -1,0 +1,33 @@
+Luke Jiang
+CSE 374 HW 2 Problem 1
+April 10 2018
+
+
+echo aardvark
+Explanation: command 'echo' prints the input string 'aardvark' to stdout.
+
+cat <<< aardvark
+Explanation: redirection operator '<<<' takes a string as stdin, command 'cat'
+prints the content of stdin to stdout.
+
+touch aardvark
+ls aardvark
+Explanation: the first command 'touch' creates a new file with filename 'aardvark',
+and the second command 'ls' finds a file in the current directory by name 'aardvark'
+and prints the filename.
+
+echo aardvark > aardvark
+grep --color=never aardvark ./aardvark
+Explanation: the first command creates a new file named 'aardvark' or overwrites
+the content of an existing 'aardvark' file with string 'aardvark'. The second command
+search the pattern 'aardvark' in file 'aardvark' and output matches with no color.
+Since the aardvark file contains only the 'aardvark' string, the output of 'grep'
+is only 'aardvark'
+
+alias aardvark=" "
+aardvark
+!!
+Explanation: Command '!!' prints out the last pair of input and output in history.
+After making aardvark as an alias for a whitespace, entering 'aardvark' to bash
+is equivalent to entering a whitespace, which does nothing and has no output.
+Therefore, command '!!' would print only the previous input string 'aardvark'.

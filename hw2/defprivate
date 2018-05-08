@@ -1,0 +1,5 @@
+# Luke Jiang
+# CSE 374 HW 2 Problem 2
+# April 10 2018
+
+alias private='chmod -R g=u,o-rwx'

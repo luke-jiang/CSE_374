@@ -1,0 +1,17 @@
+private() {
+  for item in $@; do
+    chmod g=u $item
+    chmod o-rwx $item
+    if [ -d $item ]; then
+      cd ./"$item"
+      private $(ls)
+      cd ..
+    fi
+  done
+}
+
+private2() {
+  for item in $@; do
+    chmod -R g=u,o-rwx $item
+  done
+}
