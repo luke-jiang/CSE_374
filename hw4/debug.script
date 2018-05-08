@@ -1,0 +1,64 @@
+Script started on Tue Apr 24 22:38:37 2018
+]0;yuxuaj@klaatu:~/hw4[?1034h[yuxuaj@klaatu hw4]$ gdb gasp
+[?1034hGNU gdb (GDB) Red Hat Enterprise Linux 7.11-67.el7
+Copyright (C) 2016 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "x86_64-redhat-linux-gnu".
+Type "show configuration" for configuration details.
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>.
+Find the GDB manual and other documentation resources online at:
+<http://www.gnu.org/software/gdb/documentation/>.
+For help, type "help".
+Type "apropos word" to search for commands related to "word"...
+Reading symbols from gasp...done.
+(gdb) break 35
+Breakpoint 1 at 0x40086e: file gasp.c, line 35.
+(gdb) break 75
+Breakpoint 2 at 0x400a94: file gasp.c, line 75.
+(gdb) run aardvark test1.txt
+Starting program: /homes/yuxuaj/hw4/gasp aardvark test1.txt
+Missing separate debuginfos, use: debuginfo-install glibc-2.17-196.el7_4.2.x86_64
+
+Breakpoint 1, main (argc=3, argv=0x7fffffffdd88) at gasp.c:36
+36	  int option_count = 1;
+(gdb) print argv[1]
+$1 = 0x7fffffffe053 "aardvark"
+(gdb) continue
+Continuing.
+
+Breakpoint 2, process_single_file (string=0x7fffffffdc20 "aardvark", 
+    filename=0x7fffffffe05c "test1.txt") at gasp.c:75
+75	  if (file == NULL) {
+(gdb) backtrace
+#0  process_single_file (string=0x7fffffffdc20 "aardvark", 
+    filename=0x7fffffffe05c "test1.txt") at gasp.c:75
+#1  0x0000000000400a49 in main (argc=3, argv=0x7fffffffdd88) at gasp.c:64
+(gdb) list
+70	// Check if input string appears in file filename. If filename is
+71	// not a legal file, print an error message to stdout and return.
+72	// Else, process each line in the file.
+73	void process_single_file(char *string, char *filename) {
+74	  FILE *file = fopen(filename, "r");
+75	  if (file == NULL) {
+76	    fprintf(stderr, "Unable to open file: %s\n", filename);
+77	  } else {
+78	    // buffer for each line
+79	    char line[MAX_LINE_LENGTH];
+(gdb) print filename
+$2 = 0x7fffffffe05c "test1.txt"
+(gdb) print file
+$3 = (FILE *) 0x603010
+(gdb) continue
+Continuing.
+test1.txt:and the next day the aardvark ate a
+test1.txt:    The aardvark had a great day after that,
+[Inferior 1 (process 10809) exited normally]
+(gdb) quit
+]0;yuxuaj@klaatu:~/hw4[yuxuaj@klaatu hw4]$ exit
+exit
+
+Script done on Tue Apr 24 22:39:35 2018
