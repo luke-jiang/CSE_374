@@ -1,0 +1,21 @@
+Luke Jiang
+CSE 374 HW 3 Readme
+April 16 2018
+
+1. Dealing with extra urls
+I used sed command with '-e' option, which specifies which row in the input is
+skipped when sed writes to the output. The raw output contains some extra urls
+in the front and end of the list. By specifying which lines contains an extra
+url, I skipped the unwanted urls and kept the 100 needed urls.
+
+2. Dealing with problems in input data
+There are some cases where it is not possible to download index.html via wget.
+Some websites prohibit access from the terminal, some may no longer in service,
+and some may encounter connection error. In the case of a connection failure,
+wget would keep waiting for a default amount of time. In the case of no data
+received or server not available, wget would retry for a few more times. To make
+the program run faster, I used wget options --timeout=30 and --tries=3, which set
+the default waiting time as 30 seconds and default retry as 3 times. For each try,
+if the waiting time exceeds 30 seconds, wget would proceed to the next try until
+it have retried 3 times. If html.txt is still not available, wget would give up,
+return an error message and proceed to the next url.

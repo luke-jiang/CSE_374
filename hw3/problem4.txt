@@ -1,0 +1,21 @@
+Luke Jiang
+CSE 374 HW 3 Problem 4
+April 14 2018
+
+1.
+The second line sets the x-label of the result plot as "Rank"
+The third line sets the y-label of the result plot as "Size (Bytes)"
+The fourth line sets the range of x-label as range 0 to 100 (inclusive)
+The fifth line specifies output to a file named "scatterplot.eps"
+The last line specifies input filename as "results.txt", using the first column
+  as x and the third column as y. The result file is titled with empty string
+  and plotted with "points" style
+
+2.
+From the scatterplot I get, there isn't a pattern strong and obvious enough to
+make the conclusion that the popularity of a website and the byte size of index.html
+have any statistical relationship. This is not what I expected. I thought more
+popular websites would have a smaller index.html file, because if lots of users
+are accessing a certain popular website simultaneously, a big index.html file
+would takes more time to load and makes the server even busier, and the users
+might find the website is slow.
