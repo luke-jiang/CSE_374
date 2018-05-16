@@ -1,0 +1,21 @@
+Extra Credit:
+
+1.
+If the user types a prefix, the program will traverse along the first
+non-NULL children of the trie until the current node contains a valid word
+and return that word. If no valid word is found, print "not found in the current
+directory" to the output.
+
+2.
+The TrieNode has an additional field that stores the frequency of each node.
+Words that have the same t9 code are stored in the order of decreasing frequency.
+Duplicate words are treated like different words, because a word can have multiple
+different meanings. The program ignores any word that is not a string of lower
+case letters, like "FALSE" and "co-operate".
+
+3.
+When a word is queried by the user, the frequency field of the node that stores
+that word increases by one. If the node's frequency becomes larger than its
+parent's, it will be swapped with its parent to keep the list in sorted order.
+When two words have the same frequency, the one that most recently queried by
+the user will be the output.
