@@ -1,0 +1,8 @@
+Feedback:
+(-0) A function other than main should not prematurely exit out of a running program. 
+Eg: malloc fails. Instead, it should return a NULL or some status back and let the 
+calling function handle appropriately.
+(-1) check_malloc is an unnecessary function. Factor out meaningful blocks of code in 
+to helper functions. In this case, making a function call, just for one if statement 
+is a lot of overhead for too little work.
+(-1) Program doesn't exit gracefully on Ctrl+D or EOF.
