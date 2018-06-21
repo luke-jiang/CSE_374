@@ -1,0 +1,18 @@
+
+
+1. MAKEFILE: 3 / 5
+    -2 Makefile should provide at least the 3 required targets (bench, test, clean)
+2. GIT REPO and README file: 5/ 5
+
+3. CODE QUALITY: 9/ 10
+    -1 ignores failures of function calls (ie malloc)
+
+4. MEMORY MANAGEMENT: 
+a. Header files and code modularity: 5 / 5
+b. Getmem.c: 15/ 15
+c. Freemem.c: 15/ 15
+d. Get_mem_stats.c: 5/ 5
+e. Print_heap.c: 5/ 5
+f. Mem_utils.c: 5/ 5
+
+5. BENCHMARK AND TEST: 20/ 20
