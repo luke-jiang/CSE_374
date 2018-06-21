@@ -1,0 +1,48 @@
+-Name; Identifier: Chen Bai, Luke Jiang; bu
+-Work division:
+    Chen Bai:       bench.c get_mem_stats.c print_heap.c mem_impl.h
+    Luke Jiang:	        getmem.c freemem.c mem.h
+    together:		    mem_utils.c
+-Data structure and Algorithm:
+    We constructed a FreeNode data structure that has two fields:
+       next:  the pointer to the next FreeNode
+       size:  the size of the block excluding the node's own size (which is 16 bytes)
+    We have a front pointer that points to the first node in the free list. The list is sorted
+    by their addresses.
+    When the user first calls getmem, the program would call to the system INITIAL_HEAP_SIZE or size
+    amount of memory stored at front, depending on which is larger. The program first converts user's raw size input to the
+    closest multiple of 16. It then would search the current free list and try to find a block
+    big enough. If there is no available block in the list, the program would request a new
+    chunk of memory from the system and append that to the end of the free list. If user's
+    requested size is smaller than INITIAL_HEAP_SIZE, the size to the system call is INITIAL_
+    HEAP_SIZE; else, the size to system call is the user's requested size. When the program finds
+    the block large enough, it either returns the whole block or split the block, depending on
+    the difference between requested size and block size. If this difference is larger than
+    SPLIT_THRESHOLD, the program splits the block and keep the remaining chunk in the free
+    list; else, it returns the whole block.
+    When the user calls freemem, the program would traverse the current free list and find
+    the location to insert the block to be freed. It adds the block to the list and combines
+    the freed block with its neighbors if they are contiguously located. The behavior of
+    freemem is undefined if the input of freemem is not an output of getmem.
+-Additional Features:
+    We printed out size of each block in decimal to improve readability.
+    We also experimented with various INITIAL_HEAP_SIZE and SPLIT_THRESHOLD values and found
+    out that if we increase any of these two values the average byte per node would decrease
+    and total_size would increase.
+    We also implemented extra credit part 1 and part2
+-Summary of Running Bench Experiments
+    The time efficiency of the program is relatively high. The clock we used is not sensitive
+    enough to catch the time used for each 10% run and usually reports 0 to the output, but we
+    did observe at most 0.01s runtime sporadically.
+    From the experiments we analyzed, the total number of free node increases after each
+    trial and average byte per node decreases with occasional increment caused by system
+    calls. Therefore, we conclude that the fragmentation of the heap increases as the trials go.
+    If we increase INITIAL_HEAP_SIZE and SPLIT_THRESHOLD, total_size increases since we expect
+    more system call and the fragmentation is ameliorated as average byte per node increases.
+    we also observed that the higher pctget is, the smaller the average byte per node would be
+    and the more fragmented the heap would be, since getmem causes fragmentation and freemem
+    does the opposite.
+-Consulted Resources:
+    The primary sources we consulted for information are C documentation pages and tutorials
+    online for the core logic, especially topics including rand, getopt, and atoi functions.
+    We also looked up several git help websites while using gitLab.
