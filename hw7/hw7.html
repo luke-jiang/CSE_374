@@ -1,0 +1,131 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://courses.cs.washington.edu/courses/cse374/18sp/style.css" type="text/css">
+    <title>CSE 374 :: Programming Concepts and Tools :: Spring 2018</title>
+    <script>
+      function menu() {
+        var nav = document.getElementById("nav");
+        if (nav.className === "responsive") {
+          nav.className = "";
+        } else {
+          nav.className = "responsive";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <nav id="nav">
+      <h1>CSE 374</h1>
+      <a href="javascript:void(0);" class="icon" onclick="menu()">&#9776;</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/">home</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/syllabus.html">syllabus</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/lecturelist.html">lectures</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/calendar.html">calendar</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/homework.html" class="active">homework</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/exams.html">exams</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/links.html">links</a>
+      <a href="https://feedback.cs.washington.edu/">feedback</a>
+    </nav>
+    <content>
+      <div class="section">
+	<h1>Homework 7 (CSE 374 Spring 2018)</h1>
+	<p><b>30 points</b><br>
+	  <b>Due: Thursday, May 31, 2018, at 11pm</b></p>
+      </div>
+      <div class="section">
+	<h2>Synopsis</h2>
+
+	<p>In this assignment you will supply the implementation of a C++ type
+	  for Rational numbers. You should do this assignment alone. We will
+	  supply you with  a small calculator program that evaluates  arithmetic
+	  expressions using your code. You can use this to experiment with and
+	  test your implementation. But your only job is to provide an
+	  implementation of type <code>Rational</code>. As a reminder, in mathematics,
+	  a rational number is any number that can be expressed as the quotient or
+	  fraction <code>p / q</code> of two integers, a numerator <code>p</code> and
+	  a non-zero denominator <code>q</code>.</p>
+      </div>
+      <div class="section">
+	<h2>Type Rational</h2>
+
+	<p><code>Rational</code> is specified in  file <code>Rational.h</code>;
+	  there is a corresponding implementation file <code>Rational.cpp</code> in the
+	  starter code that is empty. Your job is to supply an implementation of
+	  <code>Rational</code> in  file <code>Rational.cpp</code>.</p>
+	
+	<p>You should download  the archive <a href="rational.tar"><code>rational.tar</code></a>
+	  (right-click the link), which contains the starter code. File
+	  <code>Rational.h</code> in the starter code contains descriptions of the
+	  operations of the type; to save space these are not repeated here. The
+	  archive also contains the source code for a small calculator program
+	  that uses <code>Rational</code>s and a simple <code>Makefile</code> to
+	  build it.</p>
+	
+	<p>Your implementation of <code>Rationals</code> should return values in
+	  lowest (i.e., factored) terms. In other words, the greatest common
+	  divisor of the numerator and denominator of a <code>Rational</code>
+	  should be 1, as far as can be detected by a program using type
+	  <code>Rational</code>. Furthermore, as far as an observer can tell, the
+	  denominator of a <code>Rational</code> should always be non-negative;
+	  the numerator may be positive or negative as appropriate. This does not
+	  constrain how <code>Rationals</code> are actually represented, just how
+	  they can be observed to behave.</p>
+	
+	<p>You should implement type <code>Rational</code> as defined in
+	  <code>Rational.h</code>. You may not modify the contents of this header
+	  file or add or delete anything from it. You are free, of course, to
+	  include additional helper functions and data in your
+	  <code>Rational.cpp</code> implementation file if these are useful.</p>
+	
+	<p>You do not need to check for or deal with rationals that have a denominator
+	  of 0 or similar issues. If a client of type <code>Rational</code> creates a
+	  <code>Rational</code> with a denominator of 0, or if a calculation produces
+	  such a result, simply create that result and return it.</p>
+
+	<p>You should use good style in your code, just like in our C programs,
+	  including using clint.py to check for issues.</p>
+      </div>
+      <div class="section">
+	<h2>The Calculator</h2>
+
+	<p>The calculator program (supplied) is a simple line-oriented
+	  calculator for expressions involving rational numbers. Rationals can be
+	  entered as either a positive integer <em>n</em>, meaning <em>n</em>/1,
+	  or as a pair of positive integers separated by a slash:
+	  <em>n</em>/<em>d</em>. Numbers can be combined in expressions in the
+	  usual way with the operators +, -, *, and % (for divide - the / isn't used
+	  to indicate division of two rationals since it is used to enter
+	  a single rational value). Spaces may separate parts of expressions, and
+	  subexpressions can be surrounded by parentheses. One limitation is that
+	  the calculator only implements binary operators; in particular it
+	  doesn't support unary minus. To compute -<em>r</em>, you can evaluate
+	  0-<em>r</em>. All expressions must be entered on a single line, and the
+	  calculator evaluates the expression on each input line and prints the
+	  result. The end of input is indicated by typing the usual end-of-file
+	  character (ctrl-D in Linux shell windows). The calculator makes no
+	  effort to detect or report errors such as illegal input, additional
+	  characters on the input line following a complete expression, or
+	  rationals with a denominator of 0. If it is unable to make sense out of
+	  something, it usually generates the result 0/0 and goes on to process
+	  the  next input line.</p>
+
+	<p>Remember  that your job in this assignment is only to implement type
+	  <code>Rational</code>. The calculator program is intended as a way of
+	  testing and demonstrating that your <code>Rational</code> type works
+	  properly, but you are not responsible for any of its quirks or for
+	  fixing any odd behavior that you may discover.</p>
+      </div>
+      <div class="section">
+	<h2>What to Turn In</h2>
+
+	<p>You should  turn in only the file <code>Rational.cpp</code> containing your
+	  implementation of type <code>Rational</code>. Be sure to include your name
+	  at the top of the file. Use the regular Canvas dropbox.</p>
+      </div>
+      <br><br><br>
+    </content>
+  </body>
+</html>
+

@@ -1,0 +1,475 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://courses.cs.washington.edu/courses/cse374/18sp/style.css" type="text/css">
+    <title>CSE 374 :: Programming Concepts and Tools :: Spring 2018</title>
+    <script>
+      function menu() {
+        var nav = document.getElementById("nav");
+        if (nav.className === "responsive") {
+          nav.className = "";
+        } else {
+          nav.className = "responsive";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <nav id="nav">
+      <h1>CSE 374</h1>
+      <a href="javascript:void(0);" class="icon" onclick="menu()">&#9776;</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/">home</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/syllabus.html">syllabus</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/lecturelist.html">lectures</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/calendar.html">calendar</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/homework.html" class="active">homework</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/exams.html">exams</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/links.html">links</a>
+      <a href="https://feedback.cs.washington.edu/">feedback</a>
+    </nav>
+    <content>
+      <div class="section">
+	<h1>Homework 5 (CSE 374 Spring 2018)</h1>
+	<p><b>75 points</b></p>
+	<p><b>Due: Tuesday, May 8, 2018, at 11pm</b></p>
+      </div>
+      <div class="section">
+	<h2>Assignment goals</h2>
+	<p>In this assignment, you will develop a more complex program using dynamic
+	  data structures. In doing so you will:</p>
+	<ul>
+	  <li>Gain  experience developing a larger system one part at a
+	    time, testing as you go.</li>
+	  <li>Learn about  the trie  data structure, a version of
+	    a search tree.</li>
+	  <li>Gain experience working with trees, structs, and dynamically allocated data.</li>
+	  <li>Gain more experience reading and processing text files in C.</li>
+	  
+          <li>Practice writing simple Makefiles.</li>
+	</ul>
+	<p><b>This is a significantly larger task than the previous programming assignment!</b> Start early.</p>
+	<h2>Synopsis</h2>
+	<p>In this assignment, you will build programs to implement T9 predictive text,
+	  a text input mode developed originally for cell phones and
+	  still used for numeric keypads. Each number
+	  from 2-9 on the keypad represents three or four letters, the number 0 represents
+	  a space, and 1 represents a set of symbols such as { , . ! ? } etc. The numbers
+	  from 2-9 represent letters as follows:<br />
+	  <br>
+	  2 => ABC <br>
+	  3 => DEF <br>
+	  4 => GHI <br>
+	  5 => JKL <br>
+	  6 => MNO<br>
+	  7 => PQRS <br>
+	  8 => TUV <br>
+	  9 => WXYZ
+	<p>Since multiple letters map to a single number, many key sequences represent
+	  multiple words. For example, the input 2665 represents "book&quot; and &quot;cool",
+  among other possibilities.</p>
+	<pre>
+          2       6       6       5              2       6       6       5
+        a B c   m n O   m n O   j K l    OR    a b C   m n O   m n O   j k L
+	  |         |       |     |                |       |       |       |
+	   -----------------------                  -----------------------
+	             |                                         |
+	            book                                      cool</pre>
+	<p>To translate from number sequences to words, we will use a data structure
+	  known as a trie. A trie is a multiway branching structure (tree) that stores
+	  the prefixes of sequences. As we travel down a path in the trie, we reach word
+	  sequences spelled
+	  out by the numbers along that path. Classic trie data structures have edges
+	  labeled with letters to store  prefixes of strings. But for this application,
+	  we use a compressed trie that has only 10 possible branches at each node
+	  instead of 26, since the digits 0-9 represent
+	  the 26 letters, space and symbols. Because of this, 
+	  an extra layer of complexity is needed to figure out the string represented
+	  by a path.</p>
+	
+	<p>(Actually, for our application, each node only needs 8 possible
+	  children numbered 2-9, since digits 0 and 1 don't encode letters.  But
+	  writing the code might be easier if nodes have 10 children numbered 0-9,
+	  since then subtree number <i>n</i> corresponds to digit <i>n</i>. Feel
+	  free to use either representation for the trie depending on which seems
+	  simpler to implement.)</p>
+	
+	<p>For more information on the trie data structure, <a
+							       href="http://en.wikipedia.org/wiki/Trie">here</a> is a link to the
+	  Wikipedia article.</p>
+      </div>
+      <div class="section">
+	<h2>Technical Requirements </h2>
+	
+	<p>Implement in C a program <code>t9</code>. The command</p>
+	<pre>     $ ./t9 FILE</pre>
+	<p>should read in a dictionary file (<code>FILE</code>) that contains a list
+	  of words. Translate each word in the dictionary  into its numeric key sequence,
+	  then add the
+	  key sequence to your trie, with the word at the end of the path corresponding
+	  to the digits. If a word with the same numeric  sequence already exists in
+	  the trie, add the new word to the trie as a link to a new node with an edge
+	  labeled '#' instead of one of the digits 2-9. (The words linked from a 
+	  node by the '#' edges essentially form a "linked list" of words that have the
+	  same numeric code, but we use additional tree nodes to link the words together
+	  instead of defining a separate kind of linked-list node just for this situation.)
+	<p>For example, if the program reads the set of words "jello","rocks",
+	  and "socks" from
+	  the dictionary and adds it to an empty trie, the resulting trie should look
+	  like this:<br />
+	  <br>
+	  <img src="hw5/exampleTrie.jpg" width="800" height="630" />
+	  
+	<p> Once your program has read the dictionary and built the trie
+	  containing the words in it, it should start an interactive session. The
+	  user should be able to type numbers and the program should print out the
+	  word corresponding to the sequence of numbers entered. Your program
+	  should use the numbers typed by the user to traverse the trie that has
+	  already been created,  retrieve the word, and print it to the screen.
+	  If the user then enters '#', the program should print the next word in
+	  the trie that has the same numeric value, and so forth. The user can
+	  also type a number followed by one or more '#' characters - this should
+	  print the same word that would be found by typing the number and
+	  individual '#' characters on separate input lines.</p>
+	
+	<p>As an example, if we run the program using the above trie,
+	  an interactive session might look like this:</br>
+	  <pre>
+	    Enter "exit" to quit.
+	    Enter Key Sequence (or "#" for next word):
+	    > 76257
+	    'rocks'
+	    Enter Key Sequence (or "#" for next word):
+	    > #
+	    'socks'
+	    Enter Key Sequence (or "#" for next word):
+	    > 53556
+	    'jello'
+	    Enter Key Sequence (or "#" for next word):
+	    > #
+	    There are no more T9onyms
+	    Enter Key Sequence (or "#" for next word):
+	    > 76257#
+	    'socks'
+	    Enter Key Sequence (or "#" for next word):
+	    > 76257##
+	    There are no more T9onyms
+	    Enter Key Sequence (or "#" for next word):
+	    > 4423
+	    Not found in current dictionary.
+	    Enter Key Sequence (or "#" for next word):
+	    > exit
+	</pre></p>
+	
+	<p>The interactive session should terminate either when the user enters the
+	  word "exit" or when the end-of-file is reached on the interactive input (indicated by 
+	  typing control-D on the keyboard on a separate line by itself).</p>
+	
+	<p> Note: Make sure your program properly handles the case if the user
+	  types more "#"s than there are T9onyms for a particular number.</p>
+	
+	<p>We provide you with two text files, <code><a
+							href="hw5/smallDictionary.txt">smallDictionary.txt</a></code> and
+	  <code><a href="hw5/dictionary.txt">dictionary.txt</a></code>
+	  (right-click on the links to download the files). Each  of these text
+	  files contains a list of words to be used in constructing a trie - the
+	  small one primarily for testing, and the large one for the final
+	  program. Translate each word in the file into its associated T9 key
+	  sequence, and add the word to the trie. In the case of multiple words
+	  having the same key sequence <em>k</em>, let the first word encountered
+	  in the text file be represented by the key sequence <em>k</em>, the next
+	  encountered represented by <em>k</em>#, the next <em>k</em>##, etc. For
+	  example, 2273 can represent acre, bard, bare, base, cape, card, care, or
+	  case. To disambiguate,  acre would be represented by 2273, bard by
+	  2273#, bare by 2273##,  and so forth. When a user inputs a key sequence,
+	  print the appropriate word.</p>
+	
+	<p>Your trie data structure should contain nodes to represent the
+	  tree, and strings (char arrays) containing copies of the words read
+	  from the dictionary file, linked to appropriate nodes in the trie.</p>
+	
+	<p>Besides the general specification given above, your program should
+	  meet the following requirements to receive full credit.</p>
+	<p>
+	  <ol>
+	    <li>You should create a <code>Makefile</code> and use <code>make</code>
+	      to compile your program. Your <code>Makefile</code>  should only
+	      recompile the necessary part(s) of the program after changes are
+	      made.</li>
+	    
+	    <li>Use <code>malloc</code> to dynamically allocate the nodes, strings, and
+	      any other data that make up your trie.</li>
+	    
+	    <li>If you need to create a copy of a string or other variable-size
+	      data, you should dynamically allocate an appropriate amount of storage
+	      using <code>malloc</code> and release the storage with <code>free</code>
+	      when you are done with it. The amount allocated should be based on the
+	      actual size needed, not some arbitrary size that is assumed to be "large
+	      enough".</li>
+	    
+	    <li>Use standard C library functions where possible; do not reimplement
+	      operations   available in the standard libraries.</li>
+	    
+	    <li>You must check the return status (result code) of every library
+	      function you call to be sure that no errors occurred.  In particular,
+	      <code>malloc</code> will return <code>NULL</code> if it is unable to
+	      allocate storage. Although this is extremely unlikely to happen, a
+	      robust program must check for the possibility and react appropriately if
+	      it does.</li>
+	    
+	    <li>If an error occurs when opening or reading a file, the program should write
+	      an appropriate error message to <code>stderr</code> and terminate if there
+	      is no further work to be done.</li>
+
+	    <li>Before the program terminates, all dynamically allocated data must
+	      be properly freed (i.e., <code>free</code> everything acquired with
+	      <code>malloc</code>). This should be done explicitly without relying on
+	      the operating system to clean up after the program finishes.</li>
+
+	    <li>Your code must compile and run without errors or warnings when
+	      compiled with <code>gcc -Wall</code> on klaatu or the CSE Linux
+	      VM<code></code>. Your program should build without errors when
+	      <code>make</code> is used  to run your <code>Makefile</code>. You are,
+	      of course, free to use other systems for development, and you should be
+	      fine as long as you have a relatively recent version of gcc. But we will
+	      test the code on the CSE Linux machines.</li>
+
+	    <li>Your program should terminate cleanly with no memory leaks or other
+	      memory errors reported when it is run using <code>valgrind</code>.
+	      (Warning: <code>valgrind</code> slows down execution considerably. It
+	      will take several minutes to load the full dictionary.txt file and then
+	      free the resulting tree under <code>valgrind</code>. We suggest you use
+	      smaller input files during development to test for memory problems with
+	      <code>valgrind</code>.) If memory leaks are detected,
+	      <code>valgrind</code>'s <code>--leak-check=full</code> option will be
+	      useful to generate more extensive messages with information about the
+	      memory leaks. </li>
+	</ol></p>
+      </div>
+      <div class="section">
+	<h2>Code Quality Requirements</h2>
+
+	<p>As with any program you write, your code should be readable and understandable to anyone who knows
+	  C. In particular, for full credit your code must observe the following requirements.</p>
+	
+	<p><ol>
+	    <li>Divide your program into suitable source files (at least three) and
+	      functions, each of which does a single well-defined aspect of the
+	      assignment. For example, there should almost certainly be a header and
+	      source file for the trie data structure and the operations needed on it
+	      (create a new empty trie, insert a word, search, delete the trie, etc.),
+	      and an additional file that contains the the main part of the program
+	      that uses the trie data structure. Your program most definitely may not
+	      consist of one huge main function that does everything. </li>
+	    
+	    <li>The header (<code>.h</code>) file for the trie (and any other header
+	      files) should only declare items that are shared between client programs
+	      that use the header and the file(s) that implement it. Don't include in
+	      the header file implementation details that should be hidden. Be sure to
+	      use the standard <code>#ifndef</code> preprocessor trick so your header
+	      files work properly if included more than once in a source file, either
+	      directly or indirectly.</li>
+	    
+	    <li>Be sure to include appropriate function prototypes near the beginning of each
+	      source file for functions defined in that file whose declarations are not included in a header file.</li>
+	    
+	    <li> Comment sensibly, but not excessively. You should not use comments
+	      to repeat the obvious or explain how the C language works - assume that
+	      the reader knows C at least as well as you do. Your code should,
+	      however, include the following minimum comments:
+	      
+	      <ul><li>Every function must include a heading comment that explains what
+		  the function does (not how it does it), including the significance of
+		  all parameters. It must not be necessary to read the function code to
+		  determine how to call it or what happens when it is called. (But these
+		  comments do not need to be nearly as verbose as, for example JavaDoc
+		  comments.)</li>
+		
+		<li>Every significant variable must include a comment
+		  that is sufficient to understand the information  in the variable and
+		  how it is stored. It must not be necessary to read code that initializes
+		  or uses a variable to understand this.</li>
+		
+		<li>Every source file should begin with a comment identifying the file,
+		  author, and purpose (i.e., the assignment or project).</li>
+	      </ul>
+	    </li>
+	    
+	    <li> Use appropriate names for variables and functions: nouns or noun
+	      phrases suggesting the contents of variables and the results of
+	      value-returning functions; verbs or verb phrases for <code>void</code>
+	      functions that perform an action without returning a value. Variables
+	      of local significance like loop counters or indices should be given
+	      simple names like <code>i,</code> <code>n</code>, or <code>p</code> and
+	      do not require further comments. Avoid names like <code>count</code> or
+	      <code>flag</code> that provide no useful information - use names that
+	      suggests the values being counted or the condition that is
+	      represented.</li>
+	    
+	    <li>No global variables. Use parameters (particularly pointers) appropriately.
+	      Exceptions: if you wish, you may have global variables that record the settings
+	      of any command-line options added for the extra credit part (if you create
+	      any of these). It also may be appropriate to use global variables for constant
+	      data like translation tables if the program is better structured this way.</li>
+	    
+	    <li>No unnecessary computation or excessive use of <code>malloc</code>
+	      or <code>free</code>  - these are expensive. Don't make unnecessary
+	      copies of large data structures; use pointers. (Copies of ints,
+	      pointers, and similar things are cheap; copies of large arrays and
+	      structs are expensive.)</li>
+	  </ol>
+	</p>
+	
+	<p>As with the previous assignment, we strongly suggest that you use the
+	  <a href="clint.py">clint.py</a> style checker (right-click to download,
+	  and <code>chmod +x</code> to make it executable) to review your code.
+	  While this checker may flag a few things that you wish to leave as-is,
+	  most of the things it catches, including whitespace errors in the code,
+	  should be fixed.  We will run this style checker on your code to check
+	  for any issues that should have been fixed.  Please use the class
+	  discussion board if you have questions about any of clint's warnings and
+	  whether they can be ignored. </p>
+      </div>
+      <div class="section">
+	<h2>Implementation Hints</h2>
+	
+	<ol>
+	  <li>There are a lot of things to get right here; the job may seem
+	    overwhelming if you try to do it all at once. But if you break it into
+	    small tasks, each one of which can be done individually by itself, it
+	    should be quite manageable. For instance, design the structure of the
+	    trie and the structs (and struct fields) you need. Figure out how to add a single
+	    word to the trie  before you implement the logic to process all of the
+	    words in the dictionary. Figure out how to add a few words that have
+	    different numeric codes before you  handle words that have the same
+	    codes. Implement the code to traverse the trie to translate an input key
+	    sequence into the corresponding word once you've built the trie, not
+	    before.</li>
+	  
+	  <li>Before you start typing code into the computer, spend some time
+	    sketching out data structures and code (particularly trie node
+	    <code>struct</code>s) on paper or on a whiteboard. Be sure you
+	    understand what you are trying to do before you start typing.</li>
+	  
+	  <li>Every time you add something new to your code (see hint #1), test
+	    it. <strong>Right Now!</strong> It is much easier to find and fix
+	    problems if you can isolate the potential bug to a small section of code
+	    you just added or changed. <code>gdb</code> and <code>printf</code> are
+	    your friends here to examine values while debugging.</li>
+	  
+	  <li>You will probably find it very useful to include code that can print
+	    the contents of the trie in some understandable format. This is not
+	    required, but how can you be sure your code is correct if you can't look
+	    at the trie that is built for a small set of input data?</li>
+	  
+	  <li>Start with a small data file and figure out in advance what the
+	    resulting trie should look like. Then verify that the program does, in
+	    fact, create that trie.</li>
+	  
+	  <li><code>gdb</code> is your friend.</li>
+	  
+	  <li>To build the trie, you need some way to translate characters
+	    (primarily letters) from words in the dictionary file to the
+	    corresponding keypad digits. It is probably a great idea to include in
+	    your code a function that takes a character as an argument and returns
+	    the corresponding digit. This can be implemented with a series of
+	    <code>if-elseif-else</code> statements, but another way to do it is to
+	    have an array with one entry for each possible character. In the entry
+	    for each character, store the corresponding digit code. Then you can
+	    look up the code for a character without a complicated nest of
+	    <code>if</code> statements. (Recall that in C, as in Java and other
+	    languages, a character can be used as a small integer. That is
+	    particularly helpful for exactly this kind of application, where we
+	    might want to use a character value as an index into a table of
+	    data.)</li>
+	  
+	  <li>Be sure to check for errors like trying to open a nonexistent file
+	    to see if your error handling is working properly.</li>
+	  
+	  <li>Once you're done, read the instructions again to see if you overlooked anything.</li>
+	  
+	  <li>Reread the previous hint and obey.</li>
+	</ol>
+      </div>
+      <div class="section">
+	<h2>Extra Credit</h2>
+	
+	<p>A small amount of extra credit will be awarded for adding the
+	  following extensions to an already complete, working assignment. No
+	  extra credit will be awarded if the basic program is not fully
+	  implemented and substantially bug-free. You should also turn in your
+	  working assignment before attempting any extra credit, and turn in a
+	  second archive containing the enhanced program later (see instructions
+	  below).
+	  <ul>
+	    <li>Add  functionality to allow users to give a prefix of a word as
+	      input instead of requiring entry of complete words. When a '#' is
+	      entered, if the numbers entered so far are only the prefix of a
+	      word, the program should print a word that begins with this prefix.
+	      (i,e, if '22' is the input and the user enters '#', the output might
+	      be cab; if the user types "#" again, the output might be cap;"##" :
+	      car ,...etc., depending on how the words are stored in the
+	      dictionary)</li>
+	    
+	    <li>    Store the words in the trie so that if a numeric sequence
+	      matches several possible words, the most likely word is presented
+	      first, based on how frequently different words with the same numeric
+	      sequence actually appear in English text. The data file
+	      <a href="hw5/freq_Dictionary.txt"><code>freq_Dictionary.txt</code></a>
+	      (right-click to download) contains a list of words with, in
+	      addition, the frequency of each word in ordinary text. Use the
+	      information in this file to construct your trie so the most likely
+	      words are reached first.  Warning: the data in this file has some
+	      problems, like duplicate entries for some words.  You will need to
+	      figure out how best to use this data, or find different data that is
+	      more helpful.</li>
+	    <li>Dynamically update the frequencies of words in the trie. The idea here
+	      is that if someone uses a particular word often, it should be presented
+	      first before other words that have the same numeric code. To do this,
+	      you need to rearrange the trie as the program runs so that frequently
+	      used words move to locations higher up in the trie. Or you might want to
+	      change the trie so that words with the same numeric spelling are stored
+	      as a linked list anchored at a single trie node that represents that sequence
+	      of numbers, and move words to the front of their linked list when they are used.</li>
+	    <li>Feel free to experiment with additional extensions.</li>
+	</ul></p>
+	
+	<p>If you include extensions in your program, you should also include a <code>README</code>  file
+	  that describes what you added and how to demonstrate your addition(s) when
+	  your program is executed.</p>
+      </div>
+      <div class="section">
+	<h2>Test Sequences:</h2>
+	<p>The sequences below can be used to validate your trie against the supplied
+	  <code>dictionary.txt</code> file.
+	  <ol>
+	    <li>22737: acres, bards, barer, bares, barfs, baser, bases, caper, capes, cards, carer, cares, cases</li>
+	    <li> 46637: goner, goods, goofs, homer, homes, honer, hones, hoods, hoofs, inner</li>
+	    <li>2273: acre, bard, bare, barf, base, cape, card, care, case</li>
+	    <li>729: paw, pax, pay, raw, rax, ray, saw, sax, say</li>
+	    <li>76737: popes, pores, poser, poses, roper, ropes, roses, sords, sorer, sores</li>
+	  </ol>
+	</p>
+      </div>
+      <div class="section">
+	<h2>What to turn in</h2>
+
+	<p>Create an uncompressed tar file named <code>hw5.tar</code> containing
+	  your source code and <code>Makefile</code>, and submit that using the
+	  normal class dropbox. You can do this with the command
+<pre>        $ tar cvf hw5.tar Makefile ...</pre> where <code>...</code> is replaced by the
+	  list of additional files you want to include in your submission.</p>
+	
+	<p>If you do any extra credit extensions later, create a second tar file
+	  named <code>hw5-extra.tar</code> containing the extra-credit version of
+	  your source code, <code>Makefile</code>, and the <code>README</code>
+	  file describing your extensions. Turn in that second archive in addition
+	  to the first archive containing containing the solution to the required
+	  part of the assignment.</p>
+      </div>
+      <br><br><br>
+    </content>
+  </body>
+</html>
+
+

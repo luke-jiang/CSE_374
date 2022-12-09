@@ -1,0 +1,421 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://courses.cs.washington.edu/courses/cse374/18sp/style.css" type="text/css">
+    <title>CSE 374 :: Programming Concepts and Tools :: Spring 2018</title>
+    <script>
+      function menu() {
+        var nav = document.getElementById("nav");
+        if (nav.className === "responsive") {
+          nav.className = "";
+        } else {
+          nav.className = "responsive";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <nav id="nav">
+      <h1>CSE 374</h1>
+      <a href="javascript:void(0);" class="icon" onclick="menu()">&#9776;</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/">home</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/syllabus.html">syllabus</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/lecturelist.html">lectures</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/calendar.html">calendar</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/homework.html" class="active">homework</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/exams.html">exams</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/links.html">links</a>
+      <a href="https://feedback.cs.washington.edu/">feedback</a>
+    </nav>
+    <content>
+      <div class="section">
+	<h1>Homework 3 (CSE 374 Spring 2018)</h1>
+	<p><b>Due: Tuesday, April 17, 2018, at 11pm</b></p>
+      </div>
+      <div class="section">
+	<h2>Assignment goal</h2>
+	<p>The main goal of this assignment is to learn more about shell
+	  scripting and using regular expressions and string processing
+	  programs, particularly <code>grep</code> and <code>sed</code>.  You
+	  will also learn about accessing files from the web and using a program
+	  called <code>gnuplot</code> for plotting files. </p>
+      </div>
+      <div class="section">
+	<h2>Searching the Web</h2>
+
+	<p>Note: The instructions for this assignment may seem a bit long.
+	  This is because we try to give you plenty of samples and hints for
+	  each part.  We hope this will help you complete the assignment
+	  faster. </p>
+	<h3>Documentation</h3>
+	
+	<p>In addition to the lecture notes, you may find &quot;The Linux
+	  Pocket Guide&quot; a useful reference for completing this assignment.</p>
+	
+	<p>Online manuals:
+	  <ul>
+	    <li><a href="http://www.gnu.org/software/bash/manual/bashref.html">bash</a></li>
+	    <li><a href="http://www.gnu.org/software/sed/manual/sed.html">sed</a></li>
+	    <li><a href="http://www.gnu.org/software/grep/manual/grep.html">grep</a></li>
+	    <li><a href="http://www.gnuplot.info/">gnuplot</a></li>
+	  </ul>
+	</p>
+	
+	<p>In general, whenever you need to use a new tool, you should get
+	  into the habit of looking for documentation online. There are
+	  usually good tutorials and examples that you can learn from. As you
+	  work on this assignment, if you find that you would like more
+	  information about a tool (sed, grep, or gnuplot), try searching for
+	  the name of the tool or the name of the tool followed by keywords
+	  such as &quot;tutorial&quot; or &quot;documentation&quot;.  Also be
+	  sure to use the regular Unix documentation (man pages and info
+	  command), and experiment with commands to try out various options
+	  and see what they do.</p>
+      </div>
+      <div class="section">
+	<h3>Getting ready</h3>
+
+	<p>Download the file: <a href="hw3.tar">hw3.tar</a>.
+	  Extract all the files for this assignment using the following command:
+	<pre>    $ tar -xvf hw3.tar</pre>
+	<p>You should now see a directory called <code>hw3</code>.</p>
+	
+	<p>If you see it, you are ready to start the assignment. If this
+	  did not work for you, please post a message on the
+	  discussion list describing the problem to see if someone has any
+	  ideas, or contact a TA or the instructor (if you send mail, please use
+	  cse374-staff[at]cs), or talk to another student
+	  in the class. </p>
+      </div>
+      <div class="section">
+	<h3>Background</h3>
+
+	<p> Because you did very well in CSE 374, you were offered a summer
+	  position in a research group.  As part of your summer job, you would
+	  like to run the following experiment. You have found an old web page
+	  with a list of the 100 most popular websites at the time and would like
+	  to learn more about them.  Given this list you
+	  would like to measure the sizes of their current index (home) pages (the first
+	  <code>index.html</code> file that the browser downloads when you visit
+	  the site). You suspect that popular sites must have very small index
+	  pages because they need to handle a heavy user load.</p>
+	
+	<p>We provide you the list of popular websites in the
+	  file <code>popular.html</code> (this particular list was taken
+	  from <a href="http://100bestwebsites.org">100best websites.org</a>
+	  some time ago.</p>
+	
+	<p>One approach would be to manually download each index page in the
+	  list, and use <code>wc</code> to compute its size in bytes.  You could
+	  then manually put all the results in a table and plot some graphs to
+	  display the results. This approach would be long, tedious, and error
+	  prone.  It would also be painful if you wanted to repeat the experiment
+	  on the 100 least popular websites. Instead, you decide to automate the
+	  experiment by writing a set of scripts. <br>
+	</p>
+      </div>
+      <div class="section">
+	<h3>1. Download a page and compute its size </h3>
+	
+	<p>In a file called <code>perform-measurement.sh</code>, write a bash
+	  script that takes a URL as an argument and outputs the size of the
+	  corresponding page in bytes. </p>
+	
+	<p>For example, executing your script with the URL of homework 1 on
+	  the class website as argument: </p>
+
+	<pre>    $ ./perform-measurement.sh http://courses.cs.washington.edu/courses/cse374/18sp/hws/hw1.html</pre>
+
+	<p>should output <em>only</em> 9062 to standard output:</p>
+	<pre>    9062</pre>
+	
+	<p>(This number was correct at the time this assignment was prepared,
+	  but might be somewhat different if the page is modified some time in
+	  the future.)</p>
+	
+	<p>If the user does not provide any arguments, the script should print
+	  an appropriate error message and exit with a return code of 1. </p>
+	
+	<p>If the user provides an erroneous argument or if downloading the
+	  requested page fails for any other reason, the script should simply
+	  print the number &quot;0&quot; (zero).  In this case, or if the
+	  page is downloaded successfully, the script should exit with a
+	  return code of 0 after printing the number to to standard output.</p>
+	
+	<p>Hints:</p>
+	<ul>
+	  <li>Remember to change permissions
+	    on <code>perform-measurement.sh</code> to make it executable. </li>
+	  
+	  <li>The <code>wget</code> program downloads files from the
+	    web. Use <code>man wget </code>to see its options.</li>
+	  
+	  <li>Your script may create <em>temporary</em> files if you
+	    want. The <code>mktemp</code> program produces unique file names
+	    for temporary files. If you create a temporary file, you should
+	    remove it before your script exits. Generally it is best to create
+	    temporary files like this in <code>/tmp</code>.</li>
+	  
+	  <li>Experiment with the following commands: <code>wc
+	      a-test-file</code> and <code>wc &lt; a-test-file</code>. </li>
+	  
+	  <li>To suppress the output of a command, try to redirect its output
+	    to<code> /dev/null</code>. For example try<code> ls &gt;
+	      /dev/null </code></li>
+	</ul>
+      </div>
+      <div class="section">
+	<h3>2. Parsing the html list of websites </h3>
+
+	<p>The list of popular websites is in html format. To run an
+	  experiment automatically on each URL in this list, we need to extract
+	  the URLs and write them into a text file. There are several ways in
+	  which this can be done, and different utilities
+	  (<code>sed</code>, <code>grep</code>) can help.</p>
+	
+	<p>You <strong>must</strong> use <code>grep</code>
+	  and/or <code>sed</code> even if you know other programs or languages
+	  (<code>awk</code>, <code>perl</code>, <code>python</code>, ...)
+	  that could do similar things in different ways.  But it's fine to
+	  use <code>egrep</code> and extended regular expressions
+	  in <code>sed</code> and <code>grep</code> if you wish.</p>
+	
+	<p>In a file called<code> parse.sh</code>, write a script that
+	  extracts the URLs and writes them into a text file. The script should
+	  take two arguments: the name of the output file for results and the
+	  name of the input html file.</p>
+	
+	<p>For example, executing:</p>
+	<pre>    $ ./parse.sh popular.txt popular.html</pre>
+	
+	<p>Should write content similar to the following into <code>popular.txt</code>:</p>
+	
+	<pre>    http://www.yahoo.com/
+    http://www.google.com/
+    http://www.amazon.com/
+    ...</pre>
+	<p>If the user provides fewer than 2 arguments, the script should
+	  print an error message and exit with a return code of 1. </p>
+	
+	<p>If the text file provided as argument (for the output) exists, the
+	  script should simply overwrite it without any warning.</p>
+
+	<p>If the html file provided as argument (for the input) does not exist, the script
+	  should print an appropriate error message and exit with a return code of 1.</p>
+	
+	<p>If the script does not report any errors, it should exit with a return code of 0.</p>
+	
+	<p>Q: How come <code>popular.txt</code> might not contain exactly 100
+	  urls? Is it a bug in your script or a bug in the data? You don't
+	  need to answer this question in writing, just think about it for
+	  yourself. You <em>do</em> need to explain in a <code>readme</code>
+	  file submitted with the rest of the assignment how you chose to
+	  handle any extra urls.</p>
+	
+	<p>Hints: step-by-step instructions</p>
+	<ol>
+	  <li>Use <code>grep</code> to find all the lines that contain
+	    the string <code>http</code>. Test if it works before proceeding to
+	    step 2. </li>
+	  
+	  <li>Use <code>sed</code> to replace everything that precedes
+	    the URL with the empty string. Test if it works before proceeding
+	    to step 3. For this assignment, your sed command(s) must match
+	    the <code>http://...</code> URL strings themselves, not
+	    surrounding text in the table. (i.e., your sed command must use a
+	    pattern that matches the URLs although, of course, it probably will contain
+	    more than that if needed to isolate the URL strings. But it can't
+	    just be .* surrounded by patterns that match whatever appears
+	    before and after the URLs in this particular data file.)</li>
+	  
+	  <li>Use <code>sed</code> to replace everything after the URL
+	    with the empty string as well. Test if everything works. </li>
+	</ol>
+	
+	<p>Note: there are some URLs at the beginning and at the end of the
+	  file (such as <code>http://www.100bestwebsites.org/criteria</code>)
+	  that are not actually part of the list of 100 best web sites.  It's
+	  up to you to figure out a reasonable way to handle this so they
+	  don't get included in the output - either by removing them somehow
+	  (by hand? with some sort of script?), or leaving them in and
+	  figuring out how best to deal with them.  You should explain what
+	  you did in a <code>readme</code> file that you turn in with your
+	  code. This shouldn't be extensive or long-winded, just a sentence
+	  or two about what the problem was and how you dealt with it.</p>
+      </div>
+      <div class="section">
+	<h3>3. Running the experiment</h3>
+	
+	<p>To perform the experiment, your need to execute the
+	  script <code>perform-measurement.sh </code>on each URL inside the
+	  file<code> popular.txt</code>. Once again, you would like to do this
+	  automatically with a script. </p>
+	
+	<p>In a file called <code>run-experiment.sh</code>, write a shell
+	  script that:</p>
+	<ul>
+	  <li><code>run-experiment.sh</code> should write its output to a
+	    file. The name of that file should be given by the user as the first
+	    argument.</li>
+	  
+	  <li>Takes a file with a list of URLs as the second argument and
+	    executes <code>perform-measurement.sh</code> on each URL in the
+	    file.</li>
+	  
+	  <li>For <strong>each</strong> URL, <code>run-experiment.sh</code>
+	    should produce the following output, separated by spaces:
+	    <blockquote class="code">rank URL page-size</blockquote>
+	    The <code>rank</code> of a page is the line number of the
+	    corresponding URL in <code>popular.txt</code> (or whatever the input
+	    file containing the URLs is named).  The URL on the first line of the
+	    table has rank 1, the URL on the second line has rank 2, and so on
+	    until the last URL/line in the file. The <code>URL</code> is the same
+	    string as the argument you gave
+	    to <code>perform-measurement.sh</code>.  The <code>page-size</code> is
+	    the result of <code>perform-measurement.sh</code>. </li>
+	  
+	  <li>If <code>perform-measurement.sh</code> returns zero for a
+	    URL, <code>run-experiment.sh</code> should not write any output to
+	    the file for that URL. </li>
+	  
+	  <li>Because it can take a long time for the experiment to finish,
+	    your script should provide feedback to the user. The feedback should
+	    indicate the progress of the experiment.
+	    <ul>
+	      <li>Before executing <code>perform-measurement.sh</code> on a
+		URL, your script should print the following message:
+		&quot;<code>Performing byte-size measurement on
+		  &lt;URL&gt;...</code>&quot;. </li>
+	      
+	      <li>Once <code>perform-measurement.sh</code> produces a value,
+		if the value is greater than zero, the script should output the
+		following message: &quot;<code>...successful</code>&quot;. If the
+		value is zero, this means some error has occurred, and the
+		script should output the following message:
+		&quot;<code>...failure</code>&quot;. </li>
+	    </ul>
+	  </li>
+	  <li>When <code>run-experiment.sh</code> finishes, it should exit with
+	    a return code of 0.</li>
+	</ul>
+	
+	<p>To debug your script, instead of trying it directly
+	  on <code>popular.txt</code>, we provide you with a smaller
+	  file: <code>popular-small.txt</code>. You should execute your script
+	  on <code>popular-small.txt </code>until it works. Only then try it
+	  on<code> popular.txt</code>. </p>
+	
+	<p>Executing your script as follows:</p>
+	<pre>    $ ./run-experiment.sh results-small.txt popular-small.txt</pre>
+	<p>Should produce  output similar to the following:</p>
+	<pre>    Performing byte-size measurement on http://courses.cs.washington.edu/courses/cse374/18sp/
+    ...successful
+    Performing byte-size measurement on http://i.will.return.an.error
+    ...failure
+    Performing byte-size measurement on http://courses.cs.washington.edu/courses/cse374/18sp/syllabus.html
+    ...successful</pre>
+	<p>And the content of <code>results-small.txt</code> should be similar
+	  to the ones below. <em>Note that the exact values will change as we edit the
+	    class website!</em></p>
+	
+	<pre>
+    1 http://courses.cs.washington.edu/courses/cse374/18sp/ 4556
+    3 http://courses.cs.washington.edu/courses/cse374/18sp/syllabus.html 10941</pre>
+	<p> </p>
+	<p>As another example, after executing your script as follows:</p>
+	<pre>    $ ./run-experiment.sh results.txt popular.txt</pre>
+	<p>The file <code>results.txt</code>, should contain results that are formatted
+	  like the ones shown below (when you run your experiment, the exact values
+	  will likely differ) </p>
+	<pre>
+    ...
+    4 http://www.about.com/ 47597
+    5 http://www.bartleby.com/ 254654
+    6 http://groups.google.com/ 22469
+    ...</pre>
+      </div>
+      <div class="section">
+	<h3>4. Plotting the results</h3>
+	
+	<p>It is hard to understand the results just by looking at a list of
+	  numbers, so you would like to produce a graph. More specifically, you
+	  would like to produce a scatterplot, where the x-axis will show the
+	  rank of a website and the y-axis will show the size of the index
+	  page. </p>
+	
+	<p>Luckily, you talk about your problem to your friend Alice. She
+	  suggests that you use a program called <code>gnuplot</code> to produce
+	  the graph. Because she used it many times before, Alice helps you
+	  write the necessary gnuplot script
+	  called <code>produce-scatterplot.gnuplot.</code> Note that the gnuplot
+	  file expects your experimental results to be stored in a file
+	  called <code>results.txt.</code></p>
+	
+	<p>Produce the graph with the following command:</p>
+	
+	<pre>    $ gnuplot produce-scatterplot.gnuplot  </pre>
+	
+	<p>The script should produce a file
+	  called <code>scatterplot.eps</code>.  You can view it
+	  with <code>ghostscript</code> (<code>gs</code>) or <code>evince</code> or any other program that knows how to
+	  display an eps (encapsulated PostScript) file.</p>
+	
+	<pre>    $ gs scatterplot.eps</pre>
+	
+	<p>If you are working on <code>klaatu</code> or some other remote machine, you can
+	  either transfer the .eps file to your local machine and view it there,
+	  or you can see it by running the viewer program remotely. In the later
+	  case you may need to use the -Y option on ssh (ssh -Y klaatu.cs....)
+	  or the equivalent on your remote login application (Putty, for
+	  example). This sets up the connection so the remote viewer program can
+	  open a window on your local machine to display the results.</p>
+	
+	<p>If you are using the CSE Linux VM and <code>ghostscript</code> is not
+	  installed, use the Centos software installation program to add it
+	  (<code>sudo yum install ghostscript</code>).  Similarly, if
+	  <code>gnuplot</code> or <code>evince</code> or something else you need
+	  is missing, use <code>yum</code> to install it.</p>
+	
+	<p>Note: The version of <code>evince</code> that is installed on the
+	  current version of the CSE Linux systems may have
+	  problems displaying the .eps files generated by <code>gnuplot</code>, at
+	  least some of the time. If you run into  that problem, use
+	  <code>ghostscript</code> instead or transfer the files to another system
+	  for viewing.</p>
+	
+	<p>Write your answers to the following questions in a file
+	  called <code>problem4.txt</code>: </p>
+	
+	<p>Q1: Examine the gnuplot file<code>
+	    produce-scatterplot.gnuplot</code>. Ignoring the first line, explain
+	  what the rest of the script does.</p>
+
+	<p>Q2: Looking at the scatterplot, what can you conclude about the
+	  relationship between the popularity of a site and the size of
+	  its <code>index.html</code> file? Are these result what you
+	  expected? </p>
+      </div>
+      <div class="section">
+	<h2>Turn-in instructions</h2>
+	<p>Here is the list of files that you need to turn in:</p>
+	<ul>
+	  <li>Problem 1: <code>perform-measurement.sh</code></li>
+	  <li>Problem 2: <code>parse.sh</code></li>
+	  <li>Problem 3: <code>run-experiment.sh</code></li>
+	  <li>Problem 4: <code>problem4.txt</code> and <code>scatterplot.eps</code></li>
+	  <li>The <code>readme</code> file containing your (brief) notes about how you
+	    dealt with extraneous urls or other problems in the input data.</li>
+	</ul>
+	<p>Every file you turn in should have your name and information identifying the
+	  problem in a comment (except for the .eps file where this won't be feasible).
+	  If you do combine your files into an archive, use some straightforward format
+	  like tar or zip and don't use exotic compression formats. (We want to be able
+	  to unscramble what you turn in without having to guess.)</p>
+	<p>Please turn in your files using the <a href="https://canvas.uw.edu/courses/1199331/assignments/4221230">regular turnin dropbox</a>.</p>
+      </div>
+      <br><br><br>
+    </content>
+  </body>
+</html>
+

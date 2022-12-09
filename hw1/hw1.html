@@ -1,0 +1,178 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://courses.cs.washington.edu/courses/cse374/18sp/style.css" type="text/css">
+    <title>CSE 374 :: Programming Concepts and Tools :: Spring 2018</title>
+    <script>
+      function menu() {
+        var nav = document.getElementById("nav");
+        if (nav.className === "responsive") {
+          nav.className = "";
+        } else {
+          nav.className = "responsive";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <nav id="nav">
+      <h1>CSE 374</h1>
+      <a href="javascript:void(0);" class="icon" onclick="menu()">&#9776;</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/">home</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/syllabus.html">syllabus</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/lecturelist.html">lectures</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/calendar.html">calendar</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/homework.html" class="active">homework</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/exams.html">exams</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/links.html">links</a>
+      <a href="https://feedback.cs.washington.edu/">feedback</a>
+    </nav>
+    <content>
+      <div class="section">
+	<h1>Homework 1 (CSE 374 Spring 2018)</h1>
+	<p><b>Due: Tuesday, April 3, 2018, at 11pm</b></p>
+      </div>
+      <div class="section">
+	<p>The purpose of this assignment is for you to become familiar with the basics
+	  of the Linux shell and the range of commands that are included in most Linux
+	  distributions. This very definitely does not include all of the commands you
+	  will need for this course. Instead, it is aimed to help you learn about some
+	  basic commands as well as 
+	  how to  discover  more on your own. You should use the Linux Pocket
+	  Guide and the Linux <code>man</code> command 
+	  or the online version of the Linux man pages (see the link on the course web site)
+	  to find specific commands needed
+	  to answer these questions, and use the Pocket Guide to  read about
+	  related commands and topics. Google is also useful for locating things, but you need to learn your way around the Guide and the standard Linux documentation, which is the primary source.</p>
+	<p>There are two parts of the assignment. In Part I you are asked to run several
+	  commands  and capture the terminal session in a
+	  script file to hand in. Part II consists of several questions to be answered
+	  in a separate file. You should turn in both files when you are done.</p>
+      </div>
+      <div class="section">
+	<h2>Part I</h2>
+
+	<p>Use the command <code>script hw1.part1</code> to start
+	  a shell and save the input and output into a file <code>hw1.part1</code>. Then
+	  run the commands needed to answer the following questions. If you make a few small mistakes you don't need to start over, but include comments (input lines
+	  starting with #) after non-trivial goofs so we can follow your output easily. Also don't worry about &quot;invisible&quot; control characters like tabs and backspaces that are captured in the script file. That is normal and not something that needs to be fixed. </p>
+
+	<p>It would also be helpful if you included some comments to identify
+	  answers to the different sets of questions to make it easier for the graders to navigate through the output.</p>
+
+	<h3>Getting started</h3>
+	<ol>
+	  <li> Enter a command to print &quot;Hello world&quot; on the screen. </li>
+	  <li> Change your password. (You can change it back later if you want - don't forget
+	    it, though, you'll need it to log in next time.)</li>
+	  <li> Display the current date and time on the screen.</li>
+	</ol>
+	<h3>File paths and directory navigation</h3>
+	<ol>
+	  <li value="4"> Display the full path of your home directory.</li>
+	  <li>Go to your home directory. </li>
+	  <li> List all the files in your current directory. </li>
+	  <li> Now, create a new folder
+	    called &#8216;temp&#8217;. </li>
+	  <li> Rename this folder to &#8216;files&#8217;. </li>
+	  <li> Go to the &#8216;files&#8217; folder. </li>
+	  <li> Run a command to get the current
+	    date and time and save the output to a file called 'now' </li>
+	  <li> Copy &#8216;now&#8217; to a file
+	    called 'before' </li>
+	  <li> List all the files in this directory. Use a more
+	    detailed listing where you can see the files' permissions, date written, etc. </li>
+	  <li> Create a file called 'temp' without using a text editor. (There are at
+	    least three easy ways to do this.)</li>
+	  <li> Rename 'temp'
+	    to 'test'</li>
+	  <li> Go up one directory. </li>
+	  <li> Delete the &#8216;files&#8217; folder with a single command. (The command
+	    you use should also delete all of the files inside of the folder.)</li>
+	</ol>
+	
+	<h3>Permissions</h3>
+	<ol>
+	  <li value="17"> Create a file called 'secretfile' containing the text &#8220;It's
+	    a secret!&#8221; using
+	    the <code>echo</code> command. </li>
+	  <li> Change the permission of this file in such a way so that
+	    no one can write to it. Use the <code>ls</code> command to show the file
+	    name and permissions.</li>
+	  <li> Try to add more text to 'secretfile' using the
+	    <code>cat</code> command.</li>
+	  <li> Change permission of this file so that no one can read
+	    it. Use the <code>ls</code> command again to show the file name and permissions.</li>
+	  <li> Try to read the file using <code>cat</code>.</li>
+	</ol>
+	
+	<h3>Process Information</h3>
+	<ol>
+	  <li value="22"> Enter a command to display the version of the Linux kernel
+	    that you are you using.</li>
+	  <li> List all of the processes that belong to you (i.e., have your login id
+	    as the process user id) that are currently running.</li>
+	</ol>
+	<h3>Searching</h3>
+	<ol>
+	  <li value="24"> Use grep to display the entry with your username  in the
+	    file '/etc/passwd'.</li>
+	</ol>
+      </div>
+      <div class="section">
+	<h2>Part II</h2>
+	<p>Use a text editor (emacs suggested - you should learn how to use it at some
+	  point, even if you later use something else - although it ok to use vim instead if you insist) to create a plain text file named <code>hw1.part2</code> containing
+	  answers to the following questions:</p>
+	<ol>
+	  <li>Use the man pages to find out what wc does. Give a brief description of
+	    it here. What does the -l option for wc do?</li>
+	  <li>Run wc on the directory '/etc/passwd' and copy and paste your findings.</li>
+	  <li>What
+	    command would you use to terminate (stop) a process?</li>
+	  <li>What information does the environment variable $HOME
+	    store? (Hint: use 'echo $HOME' to investigate.)</li>
+	  <li>List two other important environment
+	    variables on your computer and what they store. Why are these variables important?</li>
+	  <li>If
+	    you created a file 'bigredbutton' somewhere on your computer and couldn't
+	    remember what folder it was in, what command could you use to find it? Just
+	    give the name of the command. You do not need to describe all of the necessary
+	    arguments.</li>
+	  <li>How is the command in the answer to the previous question different from
+	    the 'which' command?</li>
+	  <li>How does the command &#8220;echo
+	    Hello World! &gt; something&#8221; differ  from &#8220;echo
+	    Hello World!&#8221;? </li>
+	  <li>Assume we have run the first echo command from the previous question and now
+	    we execute &#8220;echo
+	    more text &gt; something&#8221;.
+	    Describe what this does.</li>
+	  <li>Now assume we have run the commands in the previous two questions and now we execute &#8220;echo
+	    yet more text &gt;&gt; something&#8221;.
+	    Describe what this does.<br>
+	  </li>
+	</ol>
+      </div>
+      <div class="section">
+	<p><strong>Assessment:</strong> Your solutions will be evaluated on how
+	  well they follow the instructions
+	  and produce the desired results in part I, and on the correctness and conciseness
+	  of your answers in part II.
+	  Note: Remember that we will check your solutions using CSE's CentOS Linux system.
+	  Be sure that your answers are valid on the CSE systems (either klaatu
+	  or the CSE home virtual machine).
+	  <br>
+	  <br>
+	  <strong>Turn-in Instructions:</strong> Use the <a href="https://canvas.uw.edu/courses/1199331/assignments/4176725">turn-in drop box link</a>
+	  to turn the <code>hw1.part1</code> file created in part I and the <code>hw1.part2</code> file with your answers to the questions 
+	  from part II. The drop box will allow you to turn in your homework up to
+	  two days late, if you choose to use one or two of your late days, but you are
+	  <em><strong>strongly</strong></em> advised to save your 
+	  late days for later in the quarter when they are almost certain to be much more useful.
+      </div>
+      <br><br><br>
+    </content>
+  </body>
+</html>

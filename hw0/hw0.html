@@ -1,0 +1,127 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://courses.cs.washington.edu/courses/cse374/18sp/style.css" type="text/css">
+    <title>CSE 374 :: Programming Concepts and Tools :: Spring 2018</title>
+    <script>
+      function menu() {
+        var nav = document.getElementById("nav");
+        if (nav.className === "responsive") {
+          nav.className = "";
+        } else {
+          nav.className = "responsive";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <nav id="nav">
+      <h1>CSE 374</h1>
+      <a href="javascript:void(0);" class="icon" onclick="menu()">&#9776;</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/">home</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/syllabus.html">syllabus</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/lecturelist.html">lectures</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/calendar.html">calendar</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/homework.html" class="active">homework</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/exams.html">exams</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/links.html">links</a>
+      <a href="https://feedback.cs.washington.edu/">feedback</a>
+    </nav>
+    <content>
+      <div class="section">
+	<h1>Homework 0 (CSE 374 Spring 2018)</h1>
+	<p><b>Due: Wednesday, March 28, 2018, at 11 pm
+	    (you <em>really <u>really</u> </em>don't want to burn up late days on this one!).</b></p>
+      </div>
+      <div class="section">
+	The purpose of this assignment is to be sure that you have your
+	Linux environment set up for the quarter and that you can log in and
+	execute shell commands. For this assignment you <i>must</i> use
+	either your
+	account on the <code>klaatu.cs.washington.edu</code> machine or your
+	own copy of the CSE Linux Virtual Machine.  It is possible to use
+	another reasonably recent Linux system for many things, but we will
+	use the CSE systems to evaluate submitted work, and you need to
+	verify that everything you submit works correctly there.  See
+	the <em><a href="../linux.html">Linux Resources</a></em> page on the
+	course web site for more information about how to get started.
+	
+	  <ol start="0">
+	    <li>(Shell) You <em><strong>must</strong></em> be sure that your
+	      default shell is <code>bash</code>.  Otherwise you will run into
+	      strange, baffling problems with shell scripts.  Enter the
+	      command <code>echo $SHELL</code>. The response should
+	      be <code>/bin/bash</code>.  If the shell name is different
+	      (<code>csh</code>, <code>tcsh</code>, or something else), use the
+	      appropriate commands on your system to change your login shell
+	      to <code>bash</code>. On many Linux and Unix systems this can be
+	      done with the command <code>chsh</code>
+	      or <code>ypchsh</code>.<br>
+	      <br>
+	    </li>
+	    <li>(Commands) Open a shell window and enter the following
+	      commands. They should work without errors if typed exactly as shown.
+	      (Exception: if you are using <code>klaatu</code>, omit the <code>cd
+		Desktop</code> command.  There is no <code>Desktop</code> directory
+	      on <code>klaatu</code> accounts.)  The <code>script</code> command
+	      will capture the terminal session and save it in a file
+	      named <code>hw0.script</code> in the current directory.<br>
+	      <pre>
+    cd 
+    cd Desktop  # omit if using klaatu
+    script hw0.script
+    whoami
+    echo $SHELL
+    pwd
+    uname -a
+    cat /etc/redhat-release
+    gcc --version -std=c11
+    exit</pre>
+	      Notes: if the <code>gcc</code> command
+	      generates a warning that -std=c11 is not a recognized option, your
+	      C compiler and, probably, your Linux version are too old, and you
+	      should use the current UW CSE Linux system for this class.<br><br>
+	      The <code>cat /etc/redhat-release</code> command should print a message that begins with <code>CentOS Linux release 7.4</code>... .
+	      If it does not, or if you get a message that the file is not found, you are not
+	      using a properly configured UW CSE Linux machine, and you should repeat
+	      the assignment once you fix that.
+	      <br><br>
+	    </li>	
+	    <li>(Chatting) Go the <a href="https://canvas.uw.edu/courses/1199331/discussion_topics">course discussion board</a> and post a followup to the Welcome message to introduce yourself.</li>
+	  </ol>
+      </div>
+      <div class="section">
+	<b>Assessment:</b> Your solution will be evaluated on how well it
+	follows the instructions and produces the desired results.  Note:
+	the <code>script</code> command captures <i>everything</i>,
+	including backspaces and other corrections as you are typing input.
+	It's fine if there is some of this in the submitted file, but if
+	there is too much clutter or too many mistakes, it would be best to
+	start over and get a reasonably clean <code>hw0.script</code> file
+	to turn in.
+      </div>
+      <div class="section">
+	<p><b>Turn-in Instructions:</b> Use the <a href="https://canvas.uw.edu/courses/1199331/assignments/4169307">turn-in drop box link</a> on the main
+	  course web page to turn in the <code>hw0.script</code> file created in
+	  problem 1.  The drop box will allow you to turn in your homework up to
+	  two days late, if you choose to use one or two of your late days, but
+	  you are <em><b><u>strongly</u></b></em> advised to save your late days
+	  for much later in the quarter when you may really want them.</p>
+	
+	<p>If you are still trying to register for the course, email the
+	  course staff (use the correct <code>cse374-staff</code> email address)
+	  to get a <code>klaatu</code> account, and you will be able to run the
+	  assignment there and submit using the dropbox.</p>
+	
+	<p>If you create the <code>hw0.script</code> file on <code>klaatu</code>,
+	  you can use <code>scp</code> (<code>winscp</code> on windows)
+	  to transfer the file to your local
+	  machine so it can be submitted using your local web browser.
+	  If you are using the UW CSE Linux virtual machine, you can run a web
+	  browser on the VM to submit the files from there.</p>
+      </div>
+      <br><br><br>
+    </content>
+  </body>
+</html>

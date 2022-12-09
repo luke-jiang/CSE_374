@@ -1,0 +1,205 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://courses.cs.washington.edu/courses/cse374/18sp/style.css" type="text/css">
+    <title>CSE 374 :: Programming Concepts and Tools :: Spring 2018</title>
+    <script>
+      function menu() {
+        var nav = document.getElementById("nav");
+        if (nav.className === "responsive") {
+          nav.className = "";
+        } else {
+          nav.className = "responsive";
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <nav id="nav">
+      <h1>CSE 374</h1>
+      <a href="javascript:void(0);" class="icon" onclick="menu()">&#9776;</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/">home</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/syllabus.html">syllabus</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/lecturelist.html">lectures</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/calendar/calendar.html">calendar</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/homework.html" class="active">homework</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/exams.html">exams</a>
+      <a href="https://courses.cs.washington.edu/courses/cse374/18sp/links.html">links</a>
+      <a href="https://feedback.cs.washington.edu/">feedback</a>
+    </nav>
+    <content>
+      <div class="section">
+	<h1>Homework 2 (CSE 374 Spring 2018)</h1>
+	<p><b>Due: Tuesday, April 10, 2018, at 11pm</b></p>
+      </div>
+      <div class="section">
+	<p>In this assignment you'll gain some more experience with shell commands and
+	  with writing short shell scripts.</p>
+
+	<p>General hint: Before trying to write and debug a script, it's very
+	  helpful to first work out the necessary commands by experimenting in
+	  a shell window.  Also, look at man pages and other descriptions of
+	  commands. Sometimes options are available that allow a single
+	  command to do something you want instead of having to use several
+	  commands or writing loops or complex control structures in a script.</p>
+
+	<ol>
+	  <li>(Commands and output) Use each of the following commands such
+	    that <code>aardvark</code> (and <em>nothing</em> more) is printed on
+	    standard out, and nothing is printed on standard error when the
+	    command is entered.  You can precede your commands with other
+	    commands (e.g., to create a file, run other commands, etc.) and/or
+	    pass options or arguments to your commands. Solve this problem for
+	    each of the listed commands individually.<br>
+	    <pre>echo, cat, ls, grep, !!</pre>
+	    
+	    In a text file called <code>problem1</code> describe your
+	    solutions, including each command you use and a very brief
+	    explanation of it, including information about any additional commands
+	    or operations that were done before executing that command.
+	    And, yes, &quot;<em>nothing</em> more&quot; in
+	    the output means &quot;<em><strong>nothing</strong></em>
+	    more&quot;.<br>
+	    <br>
+	  </li>
+	  
+	  <li>(An alias) Create a bash alias <code>private</code> such that
+	    when you run <code>private foo</code>, the entire subtree of the
+	    file-system starting at <code>foo</code> (so just <code>foo</code>
+	    if it is a file, but <code>foo</code> and all of its files and
+	    subdirectories recursively if it is a directory) has its
+	    permissions changed as follows:
+	    <br>    
+	    <ul>
+	      <br>
+	      <li>The user's (owner's) permissions are unchanged.</li>
+	      <li>The group permissions are changed to match the owner's.</li>
+	      <li>The world (others) permissions are changed to remove all
+		access permissions (no read, write, or execute).<br>
+		<br>
+	      </li>
+	    </ul>
+	    Put your alias in a file <code>defprivate</code> such that
+	    entering <code>source defprivate </code> would
+	    make <code>private</code> available in the current shell
+	    (i.e., <code>source defprivate</code> makes the <code>private</code>
+	    command available for use in the current shell, 
+	    but does not actually execute it immediately). The alias should also
+	    work on multiple arguments.<br>
+	    <br>
+	    Hint: <code>g=u</code>.<br>
+	    <br>
+	    
+	  </li>
+	  
+	  <li>(Script) Create a bash script <code>combine</code> that takes 2
+	    or more arguments, call them <code>f1, f2, ...,
+	      fn</code>. Script <code>combine</code> should work as follows:<br>
+	    <ul>
+	      <br>
+	      <li>All arguments are treated as filenames.</li>
+	      <li>If fewer than two arguments are given, print a suitable
+		error message on <code>stderr</code> and exit 
+		with a return code of 1.</li>
+	      <li>If a file or directory <code>f1</code> already exists, print
+		"Error: first file exists" on <code>stderr</code> and
+		exit with a return code of 1.</li>
+	      <li>Otherwise concatenate the contents of <code>f2, ...,
+		  fn</code> and copy them to <code>stdout</code>. Do not print
+		any error messages from this (for example if some file does
+		not exist or is a directory). Instead, any such error messages
+		should be written to <code>f1</code>.  Exit
+		with a return code of 0 after copying the files to <code>stdout</code>. 
+	    </li></ul>
+	    <br>
+	    Restriction: You may not use the file names <code>/dev/stdout</code>
+	    or <code>/dev/stderr</code>.  These are not portable across *nix
+	    systems. Although they are found on most versions of Linux the
+	    problem can be solved without them.<br>
+	    <br>
+	    Hint: Put filenames in double-quotes in case they contain
+	    &quot;funny characters&quot; (such as spaces). Your script should
+	    work with any file names, no matter what they contain.<br>
+	    <br>
+	    Hints: <code>shift, $@, -lt, -a</code>.<br>
+	    <br>
+	    Hint: Hints are just ideas you might find useful, not things that
+	    must appear in your solution.<br>
+	    <br>
+	  </li>
+	  
+	  <li>(Script) Create a bash script called <code>datedlinecount</code>
+	    that works as follows:<br>
+	    <br>
+	    <ul><li> If it is given fewer than two arguments, it prints an
+		appropriate error message and exits with a return code of 1.
+	      </li>
+	      <li>Assume all the arguments are filenames for text files; you
+		do not need to check for this.</li>
+	      <li>Append to the file indicated by the first argument the
+		following information:<br>
+		<ul>
+		  <li>The time and date</li>
+		  <li>One line for each of the second-through-last arguments,
+		    containing the number of lines in the file and then the
+		    name of the file </li>
+		  <li>If there were three or more arguments (i.e., two or more
+		    files to be counted), one additional line with the total
+		    number of lines in all the files and then the
+		    word <code>total</code>.</li>
+		</ul>
+		Your script should exit with a return code of 0 after appending the
+		requested information to the file indicated by the first argument.
+	      </li>
+	    </ul>
+	    <br>
+	    For example, executing: <code>./datedlinecount log foo bar;
+	      ./datedlinecount log foo*; cat log </code> might produce
+	    something like:<br>
+	    <pre>
+	      Wed Apr 4 09:22:16 PDT 2018
+	      18 foo
+	      23 bar
+	      41 total
+	      Wed Apr 4 09:22:17 PDT 2018
+	      18 foo
+	      6 food
+	      24 total
+	    </pre>
+	    Hints: <code>shift, date, wc, $@</code>.<br>
+	    <br>
+	    Extra credit: The output should include a total line even if only
+	    a single file appears in the list. </li>
+	</ol>
+      </div>
+      <div class="section">
+	<strong>Assessment:</strong> Your solutions should be:
+	<ul>
+	  <li>Correct scripts, etc., that run with <code>bash</code> on either of our
+	    reference systems (<code>klaatu</code> or the current CSE Linux virtual
+	    machine).</li>
+	  <li>In good style, including indentation and line breaks.</li>
+	  <li>Of reasonable size.</li>
+	</ul>
+	Identifying information including your name, CSE 374 Homework 2,
+	  the problem number, and the date should appear as comments in each
+	  of your files.
+      </div>
+      <div class="section">
+	<p><strong>Turn-in Instructions:</strong> Use the <a href="https://canvas.uw.edu/courses/1199331/assignments/4207030">turn-in drop box link</a>	to submit your files. If you wish,
+	  you can combine your files into an archive (see the <code>tar</code>
+	  command) and turn that in as a single file. The choice is yours; do
+	  whichever is most convenient.
+	<p>The drop box will allow you to turn in your homework up to two days
+	  late, if you choose to use one or two of your late days, but you
+	  are <em><strong>strongly</strong></em> advised to save your late
+	  days for later in the quarter when they are almost certain to be
+	  much more useful.
+	</p>
+      </div>
+      <br><br><br>
+    </content>
+  </body>
+</html>
+
